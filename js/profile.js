@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const repositoriesContainer = document.getElementById("repositories");
   const paginationContainer = document.getElementById("pagination");
   const reposPerPageSelect = document.getElementById("reposPerPageSelect");
+  const loader = document.getElementById("loader"); // Add loader element
 
   let perPage = parseInt(reposPerPageSelect.value, 10);
   let currentPage = 1;
@@ -13,10 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
   function updatePerPage() {
     perPage = parseInt(reposPerPageSelect.value, 10);
     currentPage = 1;
+    showLoader(); // Show loader when updating per page
     fetchRepositories();
   }
 
   reposPerPageSelect.addEventListener("change", updatePerPage);
+
+  function showLoader() {
+    loader.style.display = "block";
+  }
+
+  function hideLoader() {
+    loader.style.display = "none";
+  }
 
   fetch(`https://api.github.com/users/${username}`, {
     method: "GET",
@@ -25,9 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
       "X-GitHub-Api-Version": "2022-11-28",
     },
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        window.location.href = "home.html";
+      }
+    })
     .then((userData) => {
-      console.log(userData);
+      hideLoader(); // Hide loader after user data is fetched
       const userElement = document.createElement("div");
       userElement.classList.add("flex");
       userElement.innerHTML = `
@@ -48,9 +64,13 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .catch((error) => {
       console.log(error);
+    })
+    .finally(() => {
+      hideLoader(); // Hide loader in case of an error
     });
 
   function fetchRepositories() {
+    showLoader(); // Show loader when fetching repositories
     fetch(
       `https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${currentPage}`,
       {
@@ -68,12 +88,14 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch((error) => {
         console.error("Error fetching repositories:", error);
+      })
+      .finally(() => {
+        hideLoader(); // Hide loader after repositories are fetched
       });
   }
 
   function displayRepositories(repositories) {
     repositoriesContainer.innerHTML = "";
-    console.log(repositories);
 
     repositories.forEach((repo) => {
       const repoElement = document.createElement("div");
@@ -98,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
     prevButton.addEventListener("click", () => {
       if (currentPage > 1) {
         currentPage--;
+        showLoader(); // Show loader when navigating to previous page
         fetchRepositories();
       }
     });
@@ -107,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     nextButton.innerText = "Next";
     nextButton.addEventListener("click", () => {
       currentPage++;
+      showLoader(); // Show loader when navigating to next page
       fetchRepositories();
     });
     paginationContainer.appendChild(nextButton);
