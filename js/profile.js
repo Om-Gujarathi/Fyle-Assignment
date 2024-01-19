@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const username = urlParams.get("username");
-
+  if (username == null) {
+    window.location.href = "home.html";
+  }
   const userDetailsContainer = document.getElementById("user-details");
   const repositoriesContainer = document.getElementById("repositories");
   const paginationContainer = document.getElementById("pagination");
   const reposPerPageSelect = document.getElementById("reposPerPageSelect");
-  const loader = document.getElementById("loader"); // Add loader element
+  const loader = document.getElementById("loader");
 
   let perPage = parseInt(reposPerPageSelect.value, 10);
   let currentPage = 1;
@@ -14,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function updatePerPage() {
     perPage = parseInt(reposPerPageSelect.value, 10);
     currentPage = 1;
-    showLoader(); // Show loader when updating per page
+    showLoader();
     fetchRepositories();
   }
 
@@ -43,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
     .then((userData) => {
-      hideLoader(); // Hide loader after user data is fetched
+      hideLoader();
       const userElement = document.createElement("div");
       userElement.classList.add("flex");
       userElement.innerHTML = `
@@ -66,11 +68,11 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(error);
     })
     .finally(() => {
-      hideLoader(); // Hide loader in case of an error
+      hideLoader();
     });
 
   function fetchRepositories() {
-    showLoader(); // Show loader when fetching repositories
+    showLoader();
     fetch(
       `https://api.github.com/users/${username}/repos?per_page=${perPage}&page=${currentPage}`,
       {
@@ -90,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Error fetching repositories:", error);
       })
       .finally(() => {
-        hideLoader(); // Hide loader after repositories are fetched
+        hideLoader();
       });
   }
 
@@ -120,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     prevButton.addEventListener("click", () => {
       if (currentPage > 1) {
         currentPage--;
-        showLoader(); // Show loader when navigating to previous page
+        showLoader();
         fetchRepositories();
       }
     });
@@ -130,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
     nextButton.innerText = "Next";
     nextButton.addEventListener("click", () => {
       currentPage++;
-      showLoader(); // Show loader when navigating to next page
+      showLoader();
       fetchRepositories();
     });
     paginationContainer.appendChild(nextButton);
