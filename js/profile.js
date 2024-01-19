@@ -7,11 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const paginationContainer = document.getElementById("pagination");
   const reposPerPageSelect = document.getElementById("reposPerPageSelect");
 
-  let perPage = 12;
+  let perPage = parseInt(reposPerPageSelect.value, 10);
   let currentPage = 1;
 
   function updatePerPage() {
     perPage = parseInt(reposPerPageSelect.value, 10);
+    currentPage = 1;
     fetchRepositories();
   }
 
