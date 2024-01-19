@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const username = urlParams.get("username");
   if (username == null) {
-    window.location.href = "home.html";
+    window.location.href = "../index.html";
   }
   const userDetailsContainer = document.getElementById("user-details");
   const repositoriesContainer = document.getElementById("repositories");
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.status === 200) {
         return response.json();
       } else {
-        window.location.href = "home.html";
+        window.location.href = "../index.html";
       }
     })
     .then((userData) => {

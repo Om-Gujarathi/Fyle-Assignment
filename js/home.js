@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   viewButton.addEventListener("click", function () {
     const username = document.getElementById("textfield").value;
     if (username != "") {
-      window.location.href = "profile.html?username=" + username;
+      window.location.href = "html/profile.html?username=" + username;
     }
   });
   textField.addEventListener("keypress", function (event) {
