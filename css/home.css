@@ -1,7 +1,58 @@
-#parent {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
 }
 
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: right;
+}
+
+.company-name {
+  max-width: 200px; 
+  max-height: 60px;
+  fill: white;
+}
+
+#parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+#child {
+  text-align: center;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  color: #333;
+}
+
+input {
+  padding: 10px;
+  margin: 10px 0px;
+  width: 90%;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #555;
+}
