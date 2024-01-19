@@ -95,3 +95,7 @@ main {
     transform: rotate(360deg);
   }
 }
+
+.page-button {
+  min-width: 100px;
+}

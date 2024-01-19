@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
     paginationContainer.innerHTML = "";
 
     const prevButton = document.createElement("button");
+    prevButton.classList.add("page-button");
     prevButton.innerText = "Previous";
     prevButton.addEventListener("click", () => {
       if (currentPage > 1) {
@@ -129,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     paginationContainer.appendChild(prevButton);
 
     const nextButton = document.createElement("button");
+    nextButton.classList.add("page-button");
     nextButton.innerText = "Next";
     nextButton.addEventListener("click", () => {
       currentPage++;
